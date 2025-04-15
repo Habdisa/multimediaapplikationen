@@ -3,15 +3,9 @@ function getRandomArray() {
   const r2 = shuffleArray(r1);
   return r1.concat(r2);
 }
-function twoDimension(arr, size) {
-  var res = [];
-  for (var i = 0; i < arr.length; i = i + size)
-    res.push(arr.slice(i, i + size));
-  return res;
-}
 
 const n1 = getRandomArray();
-console.log(n1);
+
 function shuffleArray(arr) {
   const array = [...arr];
   for (let i = array.length - 1; i > 0; i--) {
@@ -20,6 +14,7 @@ function shuffleArray(arr) {
   }
   return array;
 }
+
 const board = document.getElementById("board");
 let tr = "";
 let k = 0;
