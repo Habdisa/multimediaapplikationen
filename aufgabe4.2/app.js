@@ -4,8 +4,6 @@ function getRandomArray() {
   return r1.concat(r2);
 }
 
-const randomNumber = getRandomArray();
-
 function shuffleArray(arr) {
   const array = [...arr];
   for (let i = array.length - 1; i > 0; i--) {
@@ -28,42 +26,47 @@ for (let i = 0; i < 4; i++) {
 }
 
 board.innerHTML = tr;
-let result = [];
-let previousPosValue = -1;
-let previousPos = -1;
-let previousElement = null;
-let setTimeoutId = null;
-board.addEventListener("click", (event) => {
-  let currentElement = event.target?.closest("td");
-  if (!currentElement) return;
-  const pos = currentElement?.getAttribute("pos");
-  const currentPosValue = randomNumber[pos];
-  currentElement.innerHTML = currentPosValue;
-  currentElement?.classList.add("visible");
 
-  if (
-    previousPosValue != -1 &&
-    currentPosValue == previousPosValue &&
-    pos != previousPos
-  ) {
-    currentElement.classList.add("visible");
-    previousElement.classList.add("visible");
-    currentElement.innerHTML = previousPosValue;
-    previousElement.innerHTML = previousPosValue;
-    previousElement.isFound = true;
-    currentElement.isFound = true;
-    if (setTimeoutId) {
-      clearTimeout(setTimeoutId);
+(function run() {
+  const randomNumber = getRandomArray();
+
+  let result = [];
+  let previousPosValue = -1;
+  let previousPos = -1;
+  let previousElement = null;
+  let setTimeoutId = null;
+  board.addEventListener("click", (event) => {
+    let currentElement = event.target?.closest("td");
+    if (!currentElement) return;
+    const pos = currentElement?.getAttribute("pos");
+    const currentPosValue = randomNumber[pos];
+    currentElement.innerHTML = currentPosValue;
+    currentElement?.classList.add("visible");
+
+    if (
+      previousPosValue != -1 &&
+      currentPosValue == previousPosValue &&
+      pos != previousPos
+    ) {
+      currentElement.classList.add("visible");
+      previousElement.classList.add("visible");
+      currentElement.innerHTML = previousPosValue;
+      previousElement.innerHTML = previousPosValue;
+      previousElement.isFound = true;
+      currentElement.isFound = true;
+      if (setTimeoutId) {
+        clearTimeout(setTimeoutId);
+      }
+      return;
     }
-    return;
-  }
 
-  setTimeoutId = setTimeout(() => {
-    currentElement.innerHTML = "";
-    currentElement.classList.remove("visible");
-  }, 1000);
+    setTimeoutId = setTimeout(() => {
+      currentElement.innerHTML = "";
+      currentElement.classList.remove("visible");
+    }, 1000);
 
-  previousPos = pos;
-  previousPosValue = currentPosValue;
-  previousElement = currentElement;
-});
+    previousPos = pos;
+    previousPosValue = currentPosValue;
+    previousElement = currentElement;
+  });
+})();
