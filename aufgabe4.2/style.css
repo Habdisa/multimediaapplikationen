@@ -1,29 +1,29 @@
- ul {
-   list-style: none;
- }
+ul {
+  list-style: none;
+}
 
- table {
-   margin: 0;
-   padding: 0;
-   border: 0;
+table {
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-collapse: collapse;
+}
 
- }
+tr {
+  margin: 0;
+  padding: 0;
+}
 
- tr {
-   margin: 0;
-   padding: 0;
-   border: 0;
-   /* outline: 1px solid black; */
- }
-
- td {
-   width: 1cm;
-   height: 1cm;
-   /* border: 1px solid black; */
-   outline: 1px solid black;
-   margin: 0;
-   padding: 0;
-   background-color: lightgrey;;
+td {
+  width: 1cm;
+  border: 2px solid black;
+  height: 1cm;
+  margin: 0;
+  padding: 0;
+  background-color: lightgrey;
   text-align: center;
- }
+}
 
+.visible {
+  background-color: white;
+}
