@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aufgabe 6.1</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<button id="btn">Get User</button>
+<div id="content"></div>
+
+
+<body>
+  <script>
+
+    document.getElementById('btn').addEventListener('click', () => {
+      const log = (data) => {
+        console.log(data);
+        return data;
+      }
+
+      fetch('http://localhost:8888/json').then(r => (r.json())).then(log).then(r => {
+        const { hobbies } = r;
+
+        const ul = document.createElement('ul');
+
+        const name = document.createElement('li');
+        name.innerText = `Name: ${r.name}`;
+        const telefon = document.createElement('li')
+        telefon.innerText = `Telefonnummer ${r.telefon}`;
+        const alter = document.createElement('li')
+        alter.innerText = `Alter ${r.alter}`;
+
+        ul.appendChild(name);
+        ul.append(telefon);
+        ul.append(alter)
+        const olHobbies = document.createElement('ol');
+        hobbies.map(r => {
+          const l = document.createElement('li');
+          l.innerText = r;
+          olHobbies.append(l)
+        })
+        document.getElementById('content').appendChild(ul)
+      })
+    })
+
+  </script>
+</body>
+
+</html>
