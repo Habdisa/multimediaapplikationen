@@ -22,7 +22,7 @@ const config = {
 const app = express();
 app.use (body_parser.json ());
 app.use (body_parser.urlencoded ({extended: true}));
-
+app.use(express.static("public"))
 
 // http + https instantiation
 var server;

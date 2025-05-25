@@ -7,41 +7,32 @@
   <title>Aufgabe 6.1</title>
   <link rel="stylesheet" href="/style.css">
 </head>
-<button id="btn">Get User</button>
-<div id="content"></div>
 
+
+<div class="demo">
+  <input type="button" style=" float: left; margin: 0;" value="Test" id="btn">
+  <div id="status"
+    style="border: 1px solid; width: 80%; height: 1.1em; float: left; margin: 0 1em; padding: .1em; overflow: hidden">
+  </div>
+</div>
+<div style="clear: both"></div>
+</div>
 
 <body>
   <script>
 
     document.getElementById('btn').addEventListener('click', () => {
-      const log = (data) => {
-        console.log(data);
-        return data;
-      }
 
-      fetch('http://localhost:8888/json').then(r => (r.json())).then(log).then(r => {
-        const { hobbies } = r;
 
-        const ul = document.createElement('ul');
+      fetch('http://localhost:8888/json').then(r => {
 
-        const name = document.createElement('li');
-        name.innerText = `Name: ${r.name}`;
-        const telefon = document.createElement('li')
-        telefon.innerText = `Telefonnummer ${r.telefon}`;
-        const alter = document.createElement('li')
-        alter.innerText = `Alter ${r.alter}`;
 
-        ul.appendChild(name);
-        ul.append(telefon);
-        ul.append(alter)
-        const olHobbies = document.createElement('ol');
-        hobbies.map(r => {
-          const l = document.createElement('li');
-          l.innerText = r;
-          olHobbies.append(l)
-        })
-        document.getElementById('content').appendChild(ul)
+        const status = document.getElementById('status');
+        if (r.status) {
+          status.innerHTML = r.status + " OK"
+          status.classList.add('status')
+        }
+
       })
     })
 
