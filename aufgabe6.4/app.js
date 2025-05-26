@@ -20,8 +20,9 @@ return  Promise.resolve(prom).then(value => value)
 
 function getData(index, div,text) {
   let url = `http://localhost:8888/hash/${index}`
+  // let url = `/habdisa69407/hash/${index}`
   if (!isLocal()) {
-    url= `/habdisa69407/${index}`;
+    url= `/habdisa69407/hash/${index}`;
     
   }
 
@@ -36,10 +37,11 @@ function getData(index, div,text) {
 }
 
 function createWalls(n) {
-  return Array.from(Array(n).keys()).map((r,i) => createWall(i)).map((div,i) => {
+  return Array.from(Array(n).keys()).map((r,index) => createWall(index)).map((div,i) => {
     div.addEventListener('blur', () => {
-      console.log(div.innerText)
-      fetch(`http://localhost:8888/hash/${i}`,
+  let url = `http://localhost:8888/hash/${index}`
+  // let url = `/habdisa69407/hash/${index}`
+      fetch(url,
         {
           method: "POST",
           headers: { 'Content-Type': 'application/json' },
