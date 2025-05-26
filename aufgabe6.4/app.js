@@ -1,46 +1,60 @@
-const mainUrl = "http://localhost:8888/hash"
-const field = document.getElementById("content");
-const sendBTN = document.getElementById('send');
-const editBtn = document.getElementById('edit');
-function getHash(game, field) {
-  const url = `${mainUrl}/${game}/game_1`;
+function createWall(index) {
+  const div = document.createElement('div');
+  div.contentEditable = true;
+  div.classList.add('wall');
 
-  fetch(url).then(r => r.json()).then(log).then(r =>{
-    field.innerHtml = r}
-  )
+  getData(index,div,'loading ...')
+  return div;
 }
 
 
-function editHash(game,name, element, method ='POST') {
-  const url = `${mainUrl}/${game}/game_1`;
-  fetch(url, {
-    method,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 
-       name
-    })
-  }).then(r => r.json()).then(r => {
-    element.innerText = r.name;
-    const contentString = document.getElementById('content-string');
-    contentString.innerHTML = JSON.stringify(r);
+function isLocal() {
+  const prom = fetch('http://localhost:8888').then(r => {
+    return true;
+  }).catch(() => {
+    return false;
+  });
+return  Promise.resolve(prom).then(value => value)
+}
+
+
+function getData(index, div,text) {
+  let url = `http://localhost:8888/hash/${index}`
+  if (!isLocal()) {
+    url= `/habdisa69407/${index}`;
+    
   }
-  )
+
+  fetch(url).then(r => r.json()).then(r => {
+    console.log(r);
+    if (r) {
+      div.textContent = r.text;
+    } else { 
+      div.textContent = text;
+    }
+  })
 }
 
-sendBTN.addEventListener('click', (e) => {
-  e.preventDefault();
-  const input = document.getElementById('input');
-  const value = input.value;
-  const content = document.getElementById('content');
-  editHash('tictactoe',value,content)
-});
+function createWalls(n) {
+  return Array.from(Array(n).keys()).map((r,i) => createWall(i)).map((div,i) => {
+    div.addEventListener('blur', () => {
+      console.log(div.innerText)
+      fetch(`http://localhost:8888/hash/${i}`,
+        {
+          method: "POST",
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify ({ text: div.innerText })
+        }
+      ).then(r => r.json())
+      // getData(i,div)
+    });
 
-editBtn.addEventListener('click', e => {
-  e.preventDefault();
-    const input = document.getElementById('input');
-  const value = input.value;
-  const content = document.getElementById('content');
-  editHash('tictactoe',value,content, 'PUT')
+    return div;
 })
 
-getHash('tictactoe', field);
+}
+
+createWalls(16).map(r => {
+
+  document.body.appendChild(r);
+})

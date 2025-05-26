@@ -1,3 +1,12 @@
-ul {
-  list-style: none;
+.wall{
+  height: 100px;
+  width: 100px;
+  background-color: yellow;
+  float: left;
+  padding: 1em;
+  margin: 1em;;
+}
+
+body{
+  max-width: 500px;
 }
